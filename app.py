@@ -1,12 +1,18 @@
-import streamlit as st
-from PIL import Image
-import pytesseract
 import os
+import platform
+import pytesseract
+import streamlit as st
+from PIL import Image  # <-- This fixes the error in image_ad96da.png
 
-# ==========================================
-# 1. TESSERACT PATH CONFIGURATION
-# ==========================================
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# Dynamically handle Windows vs. Linux paths for Tesseract
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = (
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    )
+else:
+    # On Streamlit Cloud (Linux), it will find the global system binary automatically
+    pytesseract.pytesseract.tesseract_cmd = "tesseract"
+
 
 # ==========================================
 # 2. WEB APP LAYOUT & DESIGN
